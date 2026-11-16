@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>헥스 마녀왕국 SNS EVENT</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: #000;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .poster {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* 이미지 속 '해시태그 복사하기' 버튼 위치 */
+    .copy-button {
+      position: absolute;
+      left: 19%;
+      top: 75%;
+      width: 62%;
+      height: 7%;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 30px;
+      transform: translateX(-50%) translateY(20px);
+
+      background: #4a3295;
+      color: #fff;
+
+      padding: 15px 24px;
+      border-radius: 30px;
+
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+
+      opacity: 0;
+      transition: all 0.25s ease;
+
+      z-index: 9999;
+      pointer-events: none;
+
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <img
+      src="hashtag.png"
+      class="poster"
+      alt="헥스 마녀왕국 SNS 이벤트"
+    >
+
+    <button
+      class="copy-button"
+      onclick="copyHashtags()"
+      aria-label="해시태그 복사하기">
+    </button>
+
+  </div>
+
+  <div id="toast" class="toast">
+    해시태그가 복사되었습니다!
+  </div>
+
+  <script>
+    function copyHashtags() {
+
+      const hashtags = "@disneykorea #헥스마녀왕국 #헥스";
+
+      navigator.clipboard.writeText(hashtags)
+        .then(function () {
+          showToast();
+        })
+        .catch(function () {
+
+          const textarea = document.createElement("textarea");
+          textarea.value = hashtags;
+
+          document.body.appendChild(textarea);
+          textarea.select();
+
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+
+          showToast();
+        });
+    }
+
+    function showToast() {
+
+      const toast = document.getElementById("toast");
+
+      toast.classList.add("show");
+
+      setTimeout(function () {
+        toast.classList.remove("show");
+      }, 1800);
+
+    }
+  </script>
+
+</body>
+</html>
